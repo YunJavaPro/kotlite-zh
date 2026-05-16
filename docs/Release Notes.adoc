@@ -1,0 +1,5 @@
+= 发布说明
+
+* https://github.com/sunny-chung/kotlite/blob/main/interpreter/CHANGELOG.md[解释器]
+* https://github.com/sunny-chung/kotlite/blob/main/stdlib/CHANGELOG.md[标准库]
+* https://github.com/sunny-chung/kotlite/blob/main/stdlib-processor-gradle-plugin/CHANGELOG.md[库预处理器插件]
