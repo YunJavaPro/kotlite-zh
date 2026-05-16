@@ -1,0 +1,11 @@
+# 构建产物
+output/
+*.html
+
+# IDE 文件
+.idea/
+*.iml
+.vscode/
+
+# macOS 文件
+.DS_Store

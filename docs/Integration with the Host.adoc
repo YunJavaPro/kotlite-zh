@@ -1,0 +1,149 @@
+= 与主机集成
+
+有一些 API 允许主机向嵌入式脚本环境提供自定义可执行函数和属性。这些 API 尚未稳定，将来可能会发生变化。
+
+NOTE: 创建集成类似于创建库模块。建议阅读 <<_kotlite_interpreter_apis,创建库模块>> 中的详细信息，以深入了解此主题。
+
+== 提供函数和扩展函数
+
+要提供一个扩展函数，请使用 `ExecutionEnvironment.registerFunction(CustomFunctionDefinition)` API。
+
+下面的示例提供了一个签名为 `fun String.size(factor: Int): Int` 的扩展函数。该函数还在返回之前更改主机环境中的变量 `hostVar`。
+
+[source, kotlin]
+----
+var hostVar: Int = 0
+
+val env = ExecutionEnvironment().apply {
+    registerFunction(CustomFunctionDefinition(
+        receiverType = "String",
+        functionName = "size",
+        returnType = "Int",
+        parameterTypes = listOf(CustomFunctionParameter("factor", "Int")),
+        executable = { interpreter, receiver, args, typeArgs ->
+            IntValue((receiver as StringValue).value.length * (args[0] as IntValue).value, interpreter.symbolTable()).also {
+                hostVar = it.value
+            }
+        },
+        position = SourcePosition("MyBridge", 1, 1),
+    ))
+}
+----
+
+NOTE: `position` 的值仅在有错误或运行时异常时使用，以尝试提供有关错误的更多信息。
+
+要提供一个全局函数，只需为 `receiverType` 参数提供 `null` 值。
+
+== 提供扩展属性
+
+要提供一个扩展属性，请使用 `ExecutionEnvironment.registerExtensionProperty(ExtensionProperty)` API。
+
+下面是一个将主机变量暴露给脚本环境以读取和写入值的示例。
+
+[source, kotlin]
+----
+var hostScopeVariable = 0
+
+val env = ExecutionEnvironment().apply {
+    registerExtensionProperty(ExtensionProperty(
+        declaredName = "f",
+        receiver = "String",
+        type = "Int",
+        getter = { interpreter, subject, typeArgs ->
+            IntValue(hostScopeVariable, interpreter.symbolTable())
+        },
+        setter = { interpreter, subject, value, typeArgs ->
+            hostScopeVariable += (value as IntValue).value
+        }
+    ))
+}
+
+val interpreter = KotliteInterpreter(
+    filename = "MyScript",
+    code = """
+        val s = "abcde"
+        s.f = 10
+        val a = s.f // 10
+        s.f = 15
+        val b = s.f // 25
+    """.trimIndent(),
+    executionEnvironment = env,
+)
+interpreter.eval()
+----
+
+NOTE: 如果没有 getter 或 setter，`getter` 或 `setter` 参数可以是 `null`。
+
+== 提供全局属性
+
+提供全局属性的 API 与提供扩展属性的 API 不同。它是 `ExecutionEnvironment.registerGlobalProperty(GlobalProperty)`。
+
+[source, kotlin]
+----
+var property = 10
+
+val env = ExecutionEnvironment().apply {
+    registerGlobalProperty(GlobalProperty(
+        position = SourcePosition("MyScript", 1, 1),
+        declaredName = "x",
+        type = "Int",
+        isMutable = true,
+        getter = { interpreter -> IntValue(property, interpreter.symbolTable()) },
+        setter = { interpreter, value -> property = (value as IntValue).value },
+    ))
+    registerGlobalProperty(GlobalProperty(
+        position = SourcePosition("Math", 1, 1),
+        declaredName = "myPi",
+        type = "Double",
+        isMutable = false,
+        getter = { interpreter -> DoubleValue(3.14, interpreter.symbolTable()) },
+    ))
+}
+----
+
+NOTE: 正如示例中所示，`getter` 或 `setter` 可以是可选的（`null`）。
+
+== 在可执行文件中执行其他函数
+
+API 不太友好，但这是可能的。
+
+=== 执行 lambda 参数
+
+核心标准库有一些好的示例。
+
+./stdlib/src/commonMain/kotlin/com/sunnychung/lib/multiplatform/kotlite/stdlib/CoreLibModule.kt
+[source, kotlin]
+----
+    CustomFunctionDefinition(
+        receiverType = "T",
+        functionName = "also",
+        returnType = "T",
+        typeParameters = listOf(TypeParameter(name = "T", typeUpperBound = null)),
+        parameterTypes = listOf(CustomFunctionParameter("block", "(T) -> Unit")),
+        executable = { interpreter, receiver, args, typeArgs ->
+            val block = args[0] as LambdaValue
+            block.execute(arrayOf(receiver))
+            receiver!!
+        },
+        position = SourcePosition(name, 1, 1),
+    ),
+    CustomFunctionDefinition(
+        receiverType = "T",
+        functionName = "apply",
+        returnType = "T",
+        typeParameters = listOf(TypeParameter(name = "T", typeUpperBound = null)),
+        parameterTypes = listOf(CustomFunctionParameter("block", "T.() -> Unit")),
+        executable = { interpreter, receiver, args, typeArgs ->
+            val block = args[0] as LambdaValue
+            block.execute(arguments = emptyArray(), receiver = receiver!!)
+            receiver!!
+        },
+        position = SourcePosition(name, 1, 1),
+    ),
+----
+
+NOTE: 顺序很重要。如果 A 依赖于 B，则将 B 放在 A 之前。
+
+=== 执行其他已声明的函数
+
+这并不容易，也不是常见的用例。请查看 _/interpreter/src/commonMain/kotlin/com/sunnychung/lib/multiplatform/kotlite/model/SpecialFunction.kt_ 中的示例。

@@ -1,0 +1,63 @@
+name: 部署到 GitHub Pages
+
+on:
+  # 每次推送到 main 分支时触发部署
+  push:
+    branches: [ "main" ]
+  # 允许您从 Actions 选项卡手动运行此工作流
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 允许多个部署，但跳过旧的部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # 构建作业
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        
+      - name: 准备输出目录
+        run: |
+          mkdir -p output
+          
+      - name: 构建文档
+        uses: docker://uwebarthel/asciidoctor
+        with:
+          args: >
+            asciidoctor
+            -r asciidoctor-diagram
+            -D /github/workspace/output
+            /github/workspace/docs/index.adoc
+        # 这个 Docker 镜像挂载了工作目录，所以上面的路径在 Docker 容器内部是 /github/workspace/
+
+      - name: 复制媒体文件
+        run: |
+          cp -R docs/media/ output/
+          
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages
+          path: output/
+          
+  # 部署作业
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
