@@ -1,7 +1,7 @@
 # 构建产物
 output/
 # 注意: docinfo.html 不忽略，它是自定义样式文件
-index.html
+/index.html
 
 # IDE 文件
 .idea/
