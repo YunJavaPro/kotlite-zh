@@ -1,7 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 
-<!-- GitHub 风格样式 -->
+<!-- 现代风格样式 -->
 <style>
 /* 全局重置 */
 * {
@@ -10,46 +10,60 @@
     padding: 0;
 }
 
-/* 基础样式 */
+/* 滚动平滑和锚点偏移修复 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 为所有标题添加上边距，防止被顶部导航栏遮挡 */
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 80px;
+}
+
+/* 基础样式 - 现代渐变配色 */
 :root {
-    --color-fg-default: #1f2328;
-    --color-fg-muted: #656d76;
-    --color-fg-subtle: #6e7781;
-    --color-canvas-default: #ffffff;
-    --color-canvas-subtle: #f6f8fa;
-    --color-canvas-inset: #0d1117;
-    --color-border-default: #d1d9e0;
-    --color-border-muted: #d8dee4;
-    --color-accent-fg: #0969da;
-    --color-accent-emphasis: #0969da;
-    --color-accent-subtle: #ddf4ff;
-    --color-success-fg: #1a7f37;
-    --color-danger-fg: #cf222e;
-    --color-attention-fg: #9a6700;
-    --color-primer-shadow-inset: inset 0 1px 0 rgba(175, 184, 193, 0.2);
+    --primary-color: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #ec4899;
+    --bg-dark: #0f172a;
+    --bg-light: #1e293b;
+    --bg-card: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #475569;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --header-height: 64px;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 16px;
-    line-height: 1.5;
-    color: var(--color-fg-default);
-    background-color: var(--color-canvas-default);
-    display: flex;
-    flex-direction: column;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
     min-height: 100vh;
+    padding-top: var(--header-height);
 }
 
 /* 顶部导航栏 */
 #github-header {
     display: flex;
     align-items: center;
-    padding: 16px 24px;
-    background-color: var(--color-canvas-subtle);
-    border-bottom: 1px solid var(--color-border-default);
-    position: sticky;
+    padding: 0 24px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
     top: 0;
-    z-index: 100;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--header-height);
 }
 
 #github-header .logo {
@@ -58,90 +72,119 @@ body {
     gap: 12px;
     margin-right: auto;
     text-decoration: none;
-    color: var(--color-fg-default);
+    color: var(--text-primary);
 }
 
 #github-header .logo-icon {
-    font-size: 32px;
+    font-size: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 #github-header .logo-text {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 18px;
+    background: linear-gradient(90deg, var(--primary-light), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 #github-header .search-container {
     flex: 1;
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 400px;
+    margin: 0 24px;
 }
 
 #github-header .search-box {
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 6px;
-    background-color: var(--color-canvas-default);
-    color: var(--color-fg-default);
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
     font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#github-header .search-box:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 #github-header .nav-links {
     display: flex;
-    gap: 20px;
-    margin-left: auto;
+    gap: 16px;
 }
 
 #github-header .nav-link {
-    color: var(--color-fg-default);
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 #github-header .nav-link:hover {
-    color: var(--color-accent-fg);
+    color: var(--text-primary);
+    background-color: var(--bg-card);
 }
 
 /* 移动端菜单按钮 */
 #mobile-menu-button {
     display: none;
-    background: none;
-    border: none;
-    font-size: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 20px;
     cursor: pointer;
-    color: var(--color-fg-default);
-    padding: 4px 8px;
+    color: var(--text-primary);
+    padding: 10px 14px;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+}
+
+#mobile-menu-button:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 /* 主要内容容器 */
 #github-main-container {
     display: flex;
-    flex: 1;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
-    padding: 0;
+    min-height: calc(100vh - var(--header-height));
 }
 
 /* 左侧侧边栏 */
 #github-sidebar {
-    width: 260px;
-    padding: 24px 0 24px 24px;
-    border-right: 1px solid var(--color-border-default);
+    width: 280px;
+    padding: 24px 0;
+    border-right: 1px solid var(--border-color);
     position: sticky;
-    top: 66px;
-    height: calc(100vh - 66px);
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
     overflow-y: auto;
+    overflow-x: hidden;
     flex-shrink: 0;
 }
 
 #github-sidebar h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 24px 16px 24px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--border-color);
 }
 
 #github-sidebar ul {
@@ -149,45 +192,70 @@ body {
 }
 
 #github-sidebar li {
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 #github-sidebar a {
     display: block;
-    padding: 6px 8px;
-    color: var(--color-fg-default);
+    padding: 8px 24px;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 14px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
 }
 
 #github-sidebar a:hover {
-    background-color: var(--color-canvas-subtle);
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+#github-sidebar a.active {
+    color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.1);
+    border-left-color: var(--primary-color);
 }
 
 #github-sidebar a.sidebar-h2 {
     font-weight: 600;
-    margin-top: 8px;
+    margin-top: 4px;
+    color: var(--text-primary);
 }
 
 #github-sidebar a.sidebar-h3 {
-    padding-left: 20px;
+    padding-left: 40px;
     font-size: 13px;
-    color: var(--color-fg-muted);
 }
 
 #github-sidebar a.sidebar-h4 {
-    padding-left: 32px;
+    padding-left: 56px;
     font-size: 12px;
-    color: var(--color-fg-subtle);
+}
+
+/* 自定义滚动条 */
+#github-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#github-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#github-sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+#github-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 
 /* 中间内容区域 */
 #github-content {
     flex: 1;
-    padding: 32px 48px;
+    padding: 40px 60px;
     max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* 重新样式化原文档元素 */
@@ -208,57 +276,76 @@ body {
 
 /* 内容区域样式 */
 h1 {
-    font-size: 32px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border-muted);
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border-color);
+    background: linear-gradient(90deg, var(--primary-light), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-top: 32px;
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 40px;
     margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border-muted);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
-    margin-top: 24px;
-    margin-bottom: 12px;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    color: var(--text-primary);
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    margin-top: 20px;
-    margin-bottom: 8px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
 }
 
 p {
     margin-bottom: 16px;
+    color: var(--text-secondary);
 }
 
-/* 代码样式 */
+/* 代码样式 - 现代主题 */
 pre {
-    background-color: var(--color-canvas-subtle);
-    border-radius: 6px;
-    padding: 16px;
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d3f 100%);
+    border-radius: 12px;
+    padding: 20px;
     overflow-x: auto;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.6;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 13px;
-    background-color: var(--color-canvas-subtle);
-    padding: 2px 6px;
-    border-radius: 4px;
+    font-size: 14px;
+    background: var(--bg-card);
+    padding: 3px 8px;
+    border-radius: 6px;
+    color: var(--accent-color);
+}
+
+pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: var(--text-primary);
 }
 
 /* 表格样式 */
@@ -266,64 +353,85 @@ table {
     width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 table th, table td {
-    padding: 8px 12px;
-    border: 1px solid var(--color-border-default);
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
 }
 
 table th {
-    background-color: var(--color-canvas-subtle);
-    font-weight: 600;
+    background: linear-gradient(135deg, var(--bg-card), #2d3748);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+table td {
+    background: var(--bg-light);
+    color: var(--text-secondary);
+}
+
+table tr:hover td {
+    background: var(--bg-card);
 }
 
 /* 链接样式 */
 a {
-    color: var(--color-accent-fg);
+    color: var(--primary-light);
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 a:hover {
+    color: var(--accent-color);
     text-decoration: underline;
 }
 
 /* 列表样式 */
 ul, ol {
-    margin-bottom: 16px;
-    padding-left: 24px;
+    margin-bottom: 20px;
+    padding-left: 28px;
 }
 
 li {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
 }
 
 /* 图片样式 */
 img {
     max-width: 100%;
     height: auto;
-    border-radius: 6px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    margin: 20px 0;
 }
 
 /* 视频样式 */
 video {
     max-width: 100%;
-    border-radius: 6px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
 /* 移动端响应式 */
-@media screen and (max-width: 1012px) {
+@media screen and (max-width: 1024px) {
     #github-sidebar {
         position: fixed;
-        left: -280px;
-        top: 66px;
+        left: -300px;
+        top: var(--header-height);
         bottom: 0;
-        background-color: var(--color-canvas-default);
-        z-index: 99;
+        background: var(--bg-dark);
+        z-index: 999;
         transition: left 0.3s ease;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+        border-right: 1px solid var(--border-color);
     }
     
     #github-sidebar.open {
@@ -332,33 +440,49 @@ video {
     
     #mobile-menu-button {
         display: block;
-        margin-right: 12px;
     }
     
     #github-content {
-        padding: 24px 16px;
+        padding: 24px 20px;
     }
 }
 
 @media screen and (max-width: 768px) {
     #github-header {
-        padding: 12px 16px;
+        padding: 0 16px;
     }
     
     #github-header .search-container {
         display: none;
     }
     
+    #github-header .nav-links {
+        display: none;
+    }
+    
     h1 {
-        font-size: 24px;
+        font-size: 28px;
     }
     
     h2 {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     h3 {
         font-size: 18px;
+    }
+    
+    #github-content {
+        padding: 20px 16px;
+    }
+    
+    pre {
+        padding: 14px;
+        font-size: 13px;
+    }
+    
+    table th, table td {
+        padding: 10px 12px;
     }
 }
 
@@ -369,9 +493,10 @@ video {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 98;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 998;
     display: none;
+    backdrop-filter: blur(4px);
 }
 
 #sidebar-overlay.show {
@@ -383,15 +508,16 @@ video {
 <div id="github-header">
     <button id="mobile-menu-button" aria-label="打开菜单">☰</button>
     <a href="https://github.com/YunJavaPro/kotlite-zh" class="logo">
-        <span class="logo-icon">📚</span>
-        <span class="logo-text">Kotlite 文档</span>
+        <span class="logo-icon">💜</span>
+        <span class="logo-text">Kotlite 中文文档</span>
     </a>
     <div class="search-container">
-        <input type="text" class="search-box" placeholder="搜索文档...">
+        <input type="text" class="search-box" placeholder="搜索文档 (Ctrl+K)...">
     </div>
     <div class="nav-links">
-        <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">原项目</a>
-        <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">GitHub</a>
+        <a href="demo/index.html" class="nav-link">🎮 在线演示</a>
+        <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">📦 原项目</a>
+        <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">⭐ GitHub</a>
     </div>
 </div>
 
@@ -402,7 +528,7 @@ video {
 <div id="github-main-container">
     <!-- 左侧侧边栏 -->
     <nav id="github-sidebar">
-        <h2>📋 文档导航</h2>
+        <h2>📑 目录导航</h2>
         <ul id="sidebar-nav-list">
             <!-- 由 JavaScript 填充 -->
         </ul>
@@ -422,6 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const sidebarNavList = document.getElementById('sidebar-nav-list');
     const githubContent = document.getElementById('github-content');
+    let allHeaders = [];
     
     // 把原内容移到我们的容器中
     const originalContent = document.getElementById('content');
@@ -442,9 +569,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 从页面中提取标题生成导航
     function generateNavigation() {
-        const headers = githubContent.querySelectorAll('h1, h2, h3, h4');
+        allHeaders = githubContent.querySelectorAll('h1, h2, h3, h4');
         
-        headers.forEach((header, index) => {
+        allHeaders.forEach((header, index) => {
             // 为每个标题添加 ID，以便可以跳转
             if (!header.id) {
                 header.id = 'heading-' + index;
@@ -454,34 +581,73 @@ document.addEventListener('DOMContentLoaded', function() {
             const a = document.createElement('a');
             a.href = '#' + header.id;
             a.textContent = header.textContent;
+            a.dataset.headerId = header.id;
             
             // 根据标题级别添加不同的样式类
             a.classList.add('sidebar-' + header.tagName.toLowerCase());
             
             a.addEventListener('click', function(e) {
                 e.preventDefault();
-                header.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                const target = document.getElementById(header.id);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
                 closeSidebar();
             });
             
             li.appendChild(a);
             sidebarNavList.appendChild(li);
         });
+        
+        // 初始化高亮
+        updateActiveLink();
+    }
+    
+    // 更新侧边栏当前激活的链接
+    function updateActiveLink() {
+        const scrollPosition = window.scrollY + 100;
+        
+        let currentActiveHeader = null;
+        for (let i = allHeaders.length - 1; i >= 0; i--) {
+            const header = allHeaders[i];
+            if (header.offsetTop <= scrollPosition) {
+                currentActiveHeader = header;
+                break;
+            }
+        }
+        
+        // 清除所有激活状态
+        const allLinks = sidebarNavList.querySelectorAll('a');
+        allLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        // 激活当前链接
+        if (currentActiveHeader) {
+            const activeLink = sidebarNavList.querySelector(`a[data-header-id="${currentActiveHeader.id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+                // 滚动侧边栏使激活项可见
+                activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
     }
     
     // 打开侧边栏 - 仅移动端
     function openSidebar() {
         githubSidebar.classList.add('open');
         sidebarOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
     }
     
     // 关闭侧边栏
     function closeSidebar() {
         githubSidebar.classList.remove('open');
         sidebarOverlay.classList.remove('show');
+        document.body.style.overflow = '';
     }
     
     // 切换侧边栏状态
@@ -505,6 +671,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && githubSidebar.classList.contains('open')) {
             closeSidebar();
+        }
+        // Ctrl+K 聚焦搜索框
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchBox = document.querySelector('.search-box');
+            if (searchBox) searchBox.focus();
+        }
+    });
+    
+    // 滚动监听更新侧边栏高亮
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
         }
     });
     

@@ -13,6 +13,8 @@ include::Introduction.adoc[]
 
 include::Demo.adoc[]
 
+include::Kotlin 语法对比.adoc[]
+
 include::Release Notes.adoc[]
 
 include::Feature Requests or Reporting Issues.adoc[]
@@ -44,3 +46,5 @@ include::Known Issues.adoc[]
 :leveloffset: +1
 
 include::Language.adoc[]
+
+include::API.adoc[]

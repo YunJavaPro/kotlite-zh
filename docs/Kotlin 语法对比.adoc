@@ -1,0 +1,382 @@
+= Kotlite 与 Kotlin 语法对比
+
+== 概述
+
+Kotlite 是 Kotlin 语言的一个轻量级子集，专注于嵌入式脚本执行。本文档将详细比较 Kotlite 和标准 Kotlin 之间的语法差异，帮助你快速理解两者之间的关系。
+
+== 核心语言特性对比
+
+=== 变量声明
+
+Kotlin:
+[source,kotlin]
+----
+val immutableVar = "Hello"
+var mutableVar = 42
+----
+
+Kotlite:
+[source,kotlin]
+----
+val immutableVar = "Hello"
+var mutableVar = 42
+----
+
+*状态*: ✅ 完全支持
+
+=== 数据类型
+
+Kotlin:
+[source,kotlin]
+----
+val int: Int = 42
+val long: Long = 100L
+val double: Double = 3.14
+val string: String = "Hello"
+val boolean: Boolean = true
+val char: Char = 'A'
+----
+
+Kotlite:
+[source,kotlin]
+----
+val int: Int = 42
+val long: Long = 100L
+val double: Double = 3.14
+val string: String = "Hello"
+val boolean: Boolean = true
+val char: Char = 'A'
+----
+
+*状态*: ✅ 基本类型完全支持
+
+=== 函数声明
+
+Kotlin:
+[source,kotlin]
+----
+fun greet(name: String): String {
+    return "Hello, $name!"
+}
+
+fun add(a: Int, b: Int): Int = a + b
+----
+
+Kotlite:
+[source,kotlin]
+----
+fun greet(name: String): String {
+    return "Hello, $name!"
+}
+
+fun add(a: Int, b: Int): Int = a + b
+----
+
+*状态*: ✅ 完全支持
+
+=== Lambda 表达式
+
+Kotlin:
+[source,kotlin]
+----
+val sum: (Int, Int) -> Int = { a, b -> a + b }
+val numbers = listOf(1, 2, 3)
+val doubled = numbers.map { it * 2 }
+----
+
+Kotlite:
+[source,kotlin]
+----
+val sum: (Int, Int) -> Int = { a, b -> a + b }
+val numbers = listOf(1, 2, 3)
+val doubled = numbers.map { it * 2 }
+----
+
+*状态*: ✅ 支持
+
+== 不支持或有限支持的特性
+
+=== 类和对象
+
+Kotlin:
+[source,kotlin]
+----
+class Person(val name: String, var age: Int) {
+    fun greet() {
+        println("Hello, my name is $name")
+    }
+}
+
+object Singleton {
+    const val CONSTANT = 42
+}
+----
+
+Kotlite:
+[source,kotlin]
+----
+// 类声明支持有限
+// 主要用于内置类型和标准库
+----
+
+*状态*: ⚠️ 有限支持 - 主要用于内置类型，自定义类支持有限
+
+=== 泛型
+
+Kotlin:
+[source,kotlin]
+----
+fun <T> printList(list: List<T>) {
+    list.forEach { println(it) }
+}
+
+class Box<T>(val item: T)
+----
+
+Kotlite:
+[source,kotlin]
+----
+// 泛型在标准库中可用
+val list: List<String> = listOf("a", "b", "c")
+val map: Map<String, Int> = mapOf("one" to 1, "two" to 2)
+----
+
+*状态*: ⚠️ 标准库泛型可用，自定义泛型有限
+
+=== 扩展函数
+
+Kotlin:
+[source,kotlin]
+----
+fun String.repeat(count: Int): String {
+    return this.repeat(count)
+}
+----
+
+Kotlite:
+[source,kotlin]
+----
+// 扩展函数在标准库中可用
+"Hello".uppercase()
+listOf(1, 2, 3).map { it * 2 }
+----
+
+*状态*: ⚠️ 标准库扩展函数可用，自定义扩展可通过主机环境注册
+
+=== 协程
+
+Kotlin:
+[source,kotlin]
+----
+suspend fun fetchData(): String {
+    delay(1000)
+    return "Data"
+}
+
+fun main() {
+    runBlocking {
+        println(fetchData())
+    }
+}
+----
+
+Kotlite:
+[source,kotlin]
+----
+// 不支持协程
+----
+
+*状态*: ❌ 不支持
+
+== 控制流对比
+
+=== if/else
+
+Kotlin:
+[source,kotlin]
+----
+val max = if (a > b) a else b
+----
+
+Kotlite:
+[source,kotlin]
+----
+val max = if (a > b) a else b
+----
+
+*状态*: ✅ 完全支持
+
+=== when 表达式
+
+Kotlin:
+[source,kotlin]
+----
+val result = when (x) {
+    0 -> "Zero"
+    1 -> "One"
+    else -> "Other"
+}
+----
+
+Kotlite:
+[source,kotlin]
+----
+val result = when (x) {
+    0 -> "Zero"
+    1 -> "One"
+    else -> "Other"
+}
+----
+
+*状态*: ✅ 完全支持
+
+=== 循环
+
+Kotlin:
+[source,kotlin]
+----
+for (i in 0 until 10) { println(i) }
+for (item in list) { println(item) }
+while (condition) { /* ... */ }
+do { /* ... */ } while (condition)
+----
+
+Kotlite:
+[source,kotlin]
+----
+for (i in 0 until 10) { println(i) }
+for (item in list) { println(item) }
+while (condition) { /* ... */ }
+do { /* ... */ } while (condition)
+----
+
+*状态*: ✅ 完全支持
+
+== 标准库支持
+
+=== 核心库
+
+[cols="1,1,2"]
+|===
+|功能 |Kotlin |Kotlite
+|字符串操作 |✅ 完整 |✅ 主要功能
+|集合操作 |✅ 完整 |✅ 主要功能
+|数学运算 |✅ 完整 |✅ 主要功能
+|IO 操作 |✅ 完整 |⚠️ 有限（安全优先）
+|===
+
+=== 常用集合
+
+Kotlin:
+[source,kotlin]
+----
+val list = mutableListOf(1, 2, 3)
+val map = mutableMapOf("a" to 1, "b" to 2)
+val set = mutableSetOf(1, 2, 3)
+----
+
+Kotlite:
+[source,kotlin]
+----
+val list = mutableListOf(1, 2, 3)
+val map = mutableMapOf("a" to 1, "b" to 2)
+val set = mutableSetOf(1, 2, 3)
+----
+
+*状态*: ✅ 主要集合类型完全支持
+
+== 安全性特性
+
+=== 空值安全
+
+Kotlin:
+[source,kotlin]
+----
+val nullable: String? = null
+val length = nullable?.length ?: 0
+----
+
+Kotlite:
+[source,kotlin]
+----
+val nullable: String? = null
+val length = nullable?.length ?: 0
+----
+
+*状态*: ✅ 完全支持
+
+=== 异常处理
+
+Kotlin:
+[source,kotlin]
+----
+try {
+    // 可能抛出异常的代码
+} catch (e: Exception) {
+    // 处理异常
+} finally {
+    // 清理代码
+}
+----
+
+Kotlite:
+[source,kotlin]
+----
+try {
+    // 可能抛出异常的代码
+} catch (e: Exception) {
+    // 处理异常
+} finally {
+    // 清理代码
+}
+----
+
+*状态*: ✅ 完全支持
+
+== 实际使用建议
+
+=== 使用 Kotlite 的最佳场景
+
+1. **用户脚本执行** - 安全地执行用户提供的脚本
+2. **配置语言** - 使用 Kotlin 语法作为配置文件
+3. **嵌入式表达式** - 在应用中嵌入简单表达式
+4. **插件系统** - 安全的插件扩展机制
+
+=== 迁移指南
+
+从 Kotlin 迁移到 Kotlite:
+
+1. 移除类和对象声明
+2. 避免使用协程
+3. 简化复杂的泛型使用
+4. 使用提供的标准库函数
+5. 利用主机环境注册自定义函数
+
+=== 性能考虑
+
+Kotlite 的优势:
+- 启动时间快
+- 内存占用小
+- 安全的执行环境
+- 跨平台支持
+
+限制:
+- 不支持 JIT 编译
+- 复杂计算可能较慢
+- 某些高级特性不可用
+
+== 总结
+
+Kotlite 是 Kotlin 的一个精心设计的子集，专注于安全的嵌入式脚本执行。虽然它不支持 Kotlin 的所有特性，但它提供了足够的功能来处理大多数脚本场景，同时保持了 Kotlin 优雅的语法和类型安全。
+
+选择 Kotlite 当你需要:
+- 安全执行用户脚本
+- 轻量级嵌入式解释器
+- 跨平台兼容性
+- Kotlin 语法的熟悉感
+
+选择完整 Kotlin 当你需要:
+- 完整的语言特性
+- JVM/JS/Native 编译
+- 协程和异步编程
+- 复杂的 OOP 设计

@@ -1,0 +1,496 @@
+= 内置和标准库 API
+
+== 概述
+
+本文档详细介绍 Kotlite 的内置类型和标准库 API。Kotlite 提供了丰富的标准库函数，让你可以进行各种常用操作。
+
+== 内置类型
+
+=== Int
+
+整数类型，表示 32 位整数。
+
+[source,kotlin]
+----
+val a: Int = 42
+val b = 100
+val c = -5
+----
+
+常用操作:
+- `a + b` - 加法
+- `a - b` - 减法
+- `a * b` - 乘法
+- `a / b` - 除法
+- `a % b` - 取模
+- `a.compareTo(b)` - 比较
+
+=== Long
+
+长整数类型，表示 64 位整数。
+
+[source,kotlin]
+----
+val a: Long = 42L
+val b = 100L
+----
+
+=== Double
+
+双精度浮点数类型。
+
+[source,kotlin]
+----
+val pi: Double = 3.14159
+val e = 2.71828
+----
+
+=== Boolean
+
+布尔类型。
+
+[source,kotlin]
+----
+val isTrue: Boolean = true
+val isFalse = false
+----
+
+=== Char
+
+字符类型。
+
+[source,kotlin]
+----
+val letterA: Char = 'A'
+val newline = '\n'
+----
+
+=== String
+
+字符串类型。
+
+[source,kotlin]
+----
+val greeting: String = "Hello, World!"
+val empty = ""
+----
+
+== 核心库 (Core)
+
+=== 范围函数
+
+Kotlite 提供了常用的范围函数来简化代码。
+
+==== let
+
+对对象执行操作并返回结果。
+
+[source,kotlin]
+----
+val result = "Hello".let { 
+    it.uppercase() 
+}
+// "HELLO"
+----
+
+==== run
+
+执行代码块并返回结果。
+
+[source,kotlin]
+----
+val result = run {
+    val a = 10
+    val b = 20
+    a + b
+}
+// 30
+----
+
+==== apply
+
+对对象应用操作并返回对象本身。
+
+[source,kotlin]
+----
+val list = mutableListOf<Int>().apply {
+    add(1)
+    add(2)
+    add(3)
+}
+----
+
+==== also
+
+对对象执行额外操作并返回对象本身。
+
+[source,kotlin]
+----
+val numbers = listOf(1, 2, 3).also {
+    println("List: $it")
+}
+----
+
+== 字符串库 (Text)
+
+=== 基本操作
+
+[source,kotlin]
+----
+val str = "Hello, World!"
+
+// 获取长度
+str.length // 13
+
+// 获取字符
+str[0] // 'H'
+
+// 子串
+str.substring(0, 5) // "Hello"
+----
+
+=== 字符串转换
+
+[source,kotlin]
+----
+val str = "Hello"
+
+// 大小写转换
+str.uppercase() // "HELLO"
+str.lowercase() // "hello"
+
+// 去除空白
+"  test  ".trim() // "test"
+----
+
+=== 字符串检查
+
+[source,kotlin]
+----
+val str = "Hello, World!"
+
+// 包含
+str.contains("World") // true
+
+// 前缀/后缀
+str.startsWith("Hello") // true
+str.endsWith("!") // true
+
+// 是否为空
+"".isEmpty() // true
+"  ".isBlank() // true
+----
+
+=== 字符串分割和连接
+
+[source,kotlin]
+----
+// 分割
+"a,b,c".split(",") // ["a", "b", "c"]
+
+// 连接
+listOf("a", "b", "c").joinToString(",") // "a,b,c"
+----
+
+== 集合库 (Collections)
+
+=== List
+
+列表是有序的元素集合。
+
+[source,kotlin]
+----
+// 创建列表
+val list = listOf(1, 2, 3)
+val mutable = mutableListOf("a", "b", "c")
+
+// 访问元素
+list[0] // 1
+list.first() // 1
+list.last() // 3
+
+// 添加元素
+mutable.add("d")
+mutable.add(0, "x")
+
+// 移除元素
+mutable.remove("c")
+mutable.removeAt(0)
+----
+
+=== 列表操作
+
+[source,kotlin]
+----
+val numbers = listOf(1, 2, 3, 4, 5)
+
+// 映射
+numbers.map { it * 2 } // [2, 4, 6, 8, 10]
+
+// 过滤
+numbers.filter { it % 2 == 0 } // [2, 4]
+
+// 折叠
+numbers.fold(0) { acc, it -> acc + it } // 15
+
+// 遍历
+numbers.forEach { println(it) }
+
+// 检查
+numbers.any { it > 3 } // true
+numbers.all { it > 0 } // true
+numbers.none { it < 0 } // true
+----
+
+=== Map
+
+映射是键值对的集合。
+
+[source,kotlin]
+----
+// 创建映射
+val map = mapOf("a" to 1, "b" to 2)
+val mutable = mutableMapOf("x" to 10, "y" to 20)
+
+// 访问值
+map["a"] // 1
+map.getOrDefault("c", 0) // 0
+
+// 添加/更新
+mutable["z"] = 30
+mutable.put("w", 40)
+
+// 移除
+mutable.remove("x")
+----
+
+=== Set
+
+集合是不重复元素的集合。
+
+[source,kotlin]
+----
+// 创建集合
+val set = setOf(1, 2, 3)
+val mutable = mutableSetOf(1, 2, 3)
+
+// 添加/移除
+mutable.add(4)
+mutable.remove(2)
+
+// 检查
+set.contains(2) // true
+----
+
+== 数学库 (Math)
+
+=== 基本运算
+
+[source,kotlin]
+----
+// 绝对值
+kotlin.math.abs(-5) // 5
+
+// 最大值/最小值
+kotlin.math.max(10, 20) // 20
+kotlin.math.min(10, 20) // 10
+
+// 幂运算
+kotlin.math.pow(2.0, 3.0) // 8.0
+
+// 平方根
+kotlin.math.sqrt(16.0) // 4.0
+----
+
+=== 舍入运算
+
+[source,kotlin]
+----
+// 四舍五入
+kotlin.math.round(3.7) // 4.0
+
+// 向下/向上取整
+kotlin.math.floor(3.7) // 3.0
+kotlin.math.ceil(3.1) // 4.0
+----
+
+=== 三角函数
+
+[source,kotlin]
+----
+// 正弦/余弦/正切
+kotlin.math.sin(kotlin.math.PI / 2) // 1.0
+kotlin.math.cos(0.0) // 1.0
+kotlin.math.tan(kotlin.math.PI / 4) // 1.0
+----
+
+== 正则表达式库 (Regex)
+
+=== 创建正则表达式
+
+[source,kotlin]
+----
+val regex = Regex("\\d+")
+val pattern = Regex("[a-z]+")
+----
+
+=== 匹配操作
+
+[source,kotlin]
+----
+val regex = Regex("\\d+")
+
+// 完整匹配
+regex.matches("123") // true
+regex.matches("abc") // false
+
+// 部分匹配
+regex.containsMatchIn("abc123def") // true
+
+// 查找匹配
+regex.find("abc123def456")?.value // "123"
+regex.findAll("abc123def456").map { it.value }.toList() // ["123", "456"]
+----
+
+=== 替换操作
+
+[source,kotlin]
+----
+val regex = Regex("\\d+")
+regex.replace("abc123def456", "X") // "abcXdefX"
+----
+
+== 范围库 (Range)
+
+=== 创建范围
+
+[source,kotlin]
+----
+// 范围
+val range = 1..10
+val untilRange = 1 until 10 // 不包含10
+val downTo = 10 downTo 1
+
+// 步长
+val step = 1..10 step 2 // 1, 3, 5, 7, 9
+----
+
+=== 范围操作
+
+[source,kotlin]
+----
+val range = 1..10
+
+// 包含检查
+5 in range // true
+
+// 遍历
+for (i in range) {
+    println(i)
+}
+
+// 转换为列表
+range.toList() // [1, 2, ..., 10]
+----
+
+== IO 库 (IO)
+
+=== 输出
+
+[source,kotlin]
+----
+// 打印
+println("Hello, World!")
+print("Hello")
+
+// 格式化输出
+println("Number: %d".format(42))
+----
+
+== 字节库 (Byte)
+
+=== 字节操作
+
+[source,kotlin]
+----
+val byte: Byte = 0x7F
+
+// 位运算
+val a: Byte = 0b1010
+val b: Byte = 0b1100
+a and b // 0b1000
+a or b // 0b1110
+a xor b // 0b0110
+a.inv() // 反转位
+----
+
+== KDateTime 库 (日期时间)
+
+=== 日期时间操作
+
+[source,kotlin]
+----
+// 获取当前时间
+val now = KDateTime.now()
+
+// 访问组件
+now.year
+now.month
+now.dayOfMonth
+now.hour
+now.minute
+now.second
+----
+
+== Uuid 库
+
+=== UUID 生成
+
+[source,kotlin]
+----
+// 生成随机 UUID
+val uuid = Uuid.randomUuid()
+
+// 转换为字符串
+uuid.toString()
+
+// 解析 UUID
+Uuid.fromString("550e8400-e29b-41d4-a716-446655440000")
+----
+
+== 标准库模块
+
+=== 安装所有模块
+
+[source,kotlin]
+----
+val env = ExecutionEnvironment().apply {
+    install(AllStdLibModules())
+}
+----
+
+=== 选择性安装模块
+
+[source,kotlin]
+----
+val env = ExecutionEnvironment().apply {
+    install(CoreLibModule())
+    install(TextLibModule())
+    install(CollectionsLibModule())
+    install(MathLibModule())
+    // 其他模块...
+}
+----
+
+可用的模块:
+- `AllStdLibModules()` - 所有模块
+- `CoreLibModule()` - 核心函数
+- `TextLibModule()` - 字符串操作
+- `CollectionsLibModule()` - 集合操作
+- `MathLibModule()` - 数学函数
+- `RegexLibModule()` - 正则表达式
+- `RangeLibModule()` - 范围操作
+- `IOLibModule()` - 输入输出
+- `ByteLibModule()` - 字节操作
+- `KDateTimeLibModule()` - 日期时间
+- `UuidLibModule()` - UUID 生成
