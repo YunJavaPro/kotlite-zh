@@ -6,8 +6,6 @@
 /* 全局重置 */
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 /* 基础样式 */
@@ -38,6 +36,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 /* 顶部导航栏 */
@@ -146,6 +146,8 @@ body {
 
 #github-sidebar ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 #github-sidebar li {
@@ -181,6 +183,13 @@ body {
     padding-left: 32px;
     font-size: 12px;
     color: var(--color-fg-subtle);
+}
+
+/* 当前目录高亮样式 */
+#github-sidebar a.active {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent-fg);
+    font-weight: 500;
 }
 
 /* 中间内容区域 */
@@ -390,6 +399,7 @@ video {
         <input type="text" class="search-box" placeholder="搜索文档...">
     </div>
     <div class="nav-links">
+        <a href="demo/" class="nav-link">演示</a>
         <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">原项目</a>
         <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">GitHub</a>
     </div>
@@ -440,6 +450,9 @@ document.addEventListener('DOMContentLoaded', function() {
         originalContent.remove();
     }
     
+    // 存储所有导航链接和对应的标题
+    let navItems = [];
+    
     // 从页面中提取标题生成导航
     function generateNavigation() {
         const headers = githubContent.querySelectorAll('h1, h2, h3, h4');
@@ -469,7 +482,34 @@ document.addEventListener('DOMContentLoaded', function() {
             
             li.appendChild(a);
             sidebarNavList.appendChild(li);
+            
+            // 保存导航项
+            navItems.push({ link: a, header: header });
         });
+    }
+    
+    // 高亮当前视口内的目录
+    function highlightCurrentSection() {
+        const scrollPosition = window.scrollY + 100; // 偏移量，提前一点高亮
+        
+        let currentActiveIndex = -1;
+        
+        navItems.forEach((item, index) => {
+            const headerTop = item.header.offsetTop;
+            if (headerTop <= scrollPosition) {
+                currentActiveIndex = index;
+            }
+        });
+        
+        // 清除所有高亮
+        navItems.forEach(item => {
+            item.link.classList.remove('active');
+        });
+        
+        // 高亮当前
+        if (currentActiveIndex >= 0 && navItems[currentActiveIndex]) {
+            navItems[currentActiveIndex].link.classList.add('active');
+        }
     }
     
     // 打开侧边栏 - 仅移动端
@@ -508,7 +548,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // 监听滚动事件，更新当前目录高亮
+    window.addEventListener('scroll', function() {
+        requestAnimationFrame(highlightCurrentSection);
+    });
+    
     // 生成导航
     generateNavigation();
+    // 初始高亮
+    highlightCurrentSection();
 });
 </script>
