@@ -44,6 +44,10 @@ jobs:
         run: |
           cp -R docs/media/ output/
           
+      - name: 复制 demo 文件
+        run: |
+          cp -R demo/ output/
+          
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:
