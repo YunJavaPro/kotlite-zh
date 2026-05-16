@@ -20,8 +20,9 @@ h1, h2, h3, h4, h5, h6 {
     scroll-margin-top: 80px;
 }
 
-/* 基础样式 - 现代渐变配色 */
+/* 主题变量 */
 :root {
+    /* 深色主题（默认） */
     --primary-color: #6366f1;
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
@@ -37,17 +38,42 @@ h1, h2, h3, h4, h5, h6 {
     --success-color: #10b981;
     --warning-color: #f59e0b;
     --error-color: #ef4444;
+    --code-bg: #1e1e2e;
+    --header-bg: rgba(15, 23, 42, 0.95);
     --header-height: 64px;
 }
 
+/* 浅色主题 */
+.light-mode {
+    --primary-color: #4f46e5;
+    --primary-light: #6366f1;
+    --primary-dark: #4338ca;
+    --secondary-color: #7c3aed;
+    --accent-color: #db2777;
+    --bg-dark: #f8fafc;
+    --bg-light: #e2e8f0;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-color: #cbd5e1;
+    --code-bg: #1e1e2e;
+    --header-bg: rgba(248, 250, 252, 0.95);
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
     color: var(--text-primary);
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
     min-height: 100vh;
     padding-top: var(--header-height);
+    transition: all 0.3s ease;
+}
+
+.light-mode body, body.light-mode {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
 }
 
 /* 顶部导航栏 */
@@ -55,7 +81,7 @@ body {
     display: flex;
     align-items: center;
     padding: 0 24px;
-    background: rgba(15, 23, 42, 0.95);
+    background: var(--header-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
     position: fixed;
@@ -64,6 +90,7 @@ body {
     right: 0;
     z-index: 1000;
     height: var(--header-height);
+    transition: all 0.3s ease;
 }
 
 #github-header .logo {
@@ -76,11 +103,19 @@ body {
 }
 
 #github-header .logo-icon {
-    font-size: 28px;
+    width: 28px;
+    height: 28px;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#github-header .logo-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
 }
 
 #github-header .logo-text {
@@ -118,6 +153,7 @@ body {
 #github-header .nav-links {
     display: flex;
     gap: 16px;
+    align-items: center;
 }
 
 #github-header .nav-link {
@@ -128,11 +164,37 @@ body {
     padding: 8px 16px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 #github-header .nav-link:hover {
     color: var(--text-primary);
     background-color: var(--bg-card);
+}
+
+#github-header .nav-link .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* 主题切换按钮 */
+#theme-toggle {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
+
+#theme-toggle:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 /* 移动端菜单按钮 */
@@ -185,6 +247,9 @@ body {
     margin: 0 24px 16px 24px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 #github-sidebar ul {
@@ -318,13 +383,18 @@ p {
     color: var(--text-secondary);
 }
 
+/* 代码块容器 */
+.code-block-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
 /* 代码样式 - 现代主题 */
 pre {
     background: linear-gradient(135deg, #1e1e2e 0%, #2d2d3f 100%);
     border-radius: 12px;
     padding: 20px;
     overflow-x: auto;
-    margin-bottom: 20px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 14px;
     line-height: 1.6;
@@ -345,7 +415,37 @@ pre code {
     background: transparent;
     padding: 0;
     border-radius: 0;
-    color: var(--text-primary);
+    color: #f8fafc;
+}
+
+/* 复制按钮 */
+.copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.copy-button:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.copy-button.copied {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
 }
 
 /* 表格样式 */
@@ -370,6 +470,10 @@ table th {
     font-weight: 700;
     color: var(--text-primary);
     text-align: left;
+}
+
+.light-mode table th, table th {
+    background: linear-gradient(135deg, var(--bg-card), #e2e8f0);
 }
 
 table td {
@@ -420,6 +524,40 @@ video {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
+/* Demo 突出卡片 */
+.demo-highlight {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+.demo-highlight h2 {
+    border: none;
+    margin-top: 0;
+    padding-bottom: 8px;
+}
+
+.demo-highlight a {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.demo-highlight a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+}
+
 /* 移动端响应式 */
 @media screen and (max-width: 1024px) {
     #github-sidebar {
@@ -432,6 +570,10 @@ video {
         transition: left 0.3s ease;
         box-shadow: 4px 0 20px rgba(0,0,0,0.4);
         border-right: 1px solid var(--border-color);
+    }
+    
+    .light-mode #github-sidebar {
+        background: var(--bg-dark);
     }
     
     #github-sidebar.open {
@@ -506,18 +648,49 @@ video {
 
 <!-- 顶部导航栏 -->
 <div id="github-header">
-    <button id="mobile-menu-button" aria-label="打开菜单">☰</button>
+    <button id="mobile-menu-button" aria-label="打开菜单">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+    </button>
     <a href="https://github.com/YunJavaPro/kotlite-zh" class="logo">
-        <span class="logo-icon">💜</span>
+        <div class="logo-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+        </div>
         <span class="logo-text">Kotlite 中文文档</span>
     </a>
     <div class="search-container">
         <input type="text" class="search-box" placeholder="搜索文档 (Ctrl+K)...">
     </div>
     <div class="nav-links">
-        <a href="demo/index.html" class="nav-link">🎮 在线演示</a>
-        <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">📦 原项目</a>
-        <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">⭐ GitHub</a>
+        <a href="demo/index.html" class="nav-link">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V5H7c-1.1 0-1.99.9-1.99 2v4H3.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5H5v4c0 1.1.9 2 2 2h4v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h4c1.1 0 2-.9 2-2v-4h1.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/>
+            </svg>
+            在线演示
+        </a>
+        <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .316.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            原项目
+        </a>
+        <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            GitHub
+        </a>
+        <button id="theme-toggle" title="切换主题">
+            <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54s-2.94 8.28-7 9.54c.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/>
+            </svg>
+            <svg id="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2V4h2V1zm7.5zm2.83 3.67l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42zM20 10.5v2h3v-2h-3zm-2.76-5.66l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zM13 18.5H11v3h2v15.5zm3.24-2.34l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zM6.34 17l-1.79 1.8 1.41 1.41 1.79-1.8-1.41-1.41z"/>
+            </svg>
+        </button>
     </div>
 </div>
 
@@ -528,7 +701,12 @@ video {
 <div id="github-main-container">
     <!-- 左侧侧边栏 -->
     <nav id="github-sidebar">
-        <h2>📑 目录导航</h2>
+        <h2>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm12 12h2v-2h-2v2zm4-8v2h2V9h-2zm0 4h2v-2h-2v2zm0-8v2h2V7h-2zm-4 4h2v-2h-2v2zm-4 0h2v-2h-2v2z"/>
+            </svg>
+            目录导航
+        </h2>
         <ul id="sidebar-nav-list">
             <!-- 由 JavaScript 填充 -->
         </ul>
@@ -548,7 +726,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const sidebarNavList = document.getElementById('sidebar-nav-list');
     const githubContent = document.getElementById('github-content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
     let allHeaders = [];
+    
+    // 主题切换
+    function initTheme() {
+        const savedTheme = localStorage.getItem('kotlite-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        }
+    }
+    
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        localStorage.setItem('kotlite-theme', isLight ? 'light' : 'dark');
+        
+        if (isLight) {
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        } else {
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+        }
+    }
+    
+    initTheme();
+    themeToggle.addEventListener('click', toggleTheme);
     
     // 把原内容移到我们的容器中
     const originalContent = document.getElementById('content');
@@ -565,6 +773,63 @@ document.addEventListener('DOMContentLoaded', function() {
             githubContent.appendChild(originalContent.firstChild);
         }
         originalContent.remove();
+    }
+    
+    // 查找第一个 Demo 部分并添加突出显示
+    function highlightDemoSection() {
+        const h2Elements = githubContent.querySelectorAll('h2');
+        h2Elements.forEach(h2 => {
+            if (h2.textContent.includes('Demo') || h2.textContent.includes('演示')) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'demo-highlight';
+                const nextEl = h2.nextElementSibling;
+                
+                h2.parentNode.insertBefore(wrapper, h2);
+                wrapper.appendChild(h2);
+                
+                if (nextEl) {
+                    wrapper.appendChild(nextEl);
+                }
+                
+                // 添加 Demo 链接
+                const demoLink = document.createElement('a');
+                demoLink.href = 'demo/index.html';
+                demoLink.textContent = '立即体验';
+                wrapper.appendChild(demoLink);
+            }
+        });
+    }
+    
+    // 为代码块添加复制按钮
+    function addCopyButtons() {
+        const codeBlocks = githubContent.querySelectorAll('pre');
+        codeBlocks.forEach(block => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-block-wrapper';
+            
+            block.parentNode.insertBefore(wrapper, block);
+            wrapper.appendChild(block);
+            
+            const button = document.createElement('button');
+            button.className = 'copy-button';
+            button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> 复制';
+            
+            button.addEventListener('click', function() {
+                const code = block.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 已复制';
+                    button.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+            
+            wrapper.appendChild(button);
+        });
     }
     
     // 从页面中提取标题生成导航
@@ -694,5 +959,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 生成导航
     generateNavigation();
+    
+    // 添加复制按钮
+    addCopyButtons();
+    
+    // 突出显示 Demo 部分
+    highlightDemoSection();
 });
 </script>

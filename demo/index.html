@@ -13,7 +13,6 @@
             --bg-dark: #0f172a;
             --bg-light: #1e293b;
             --bg-card: #334155;
-            --bg-input: #1e293b;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -29,7 +28,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
             color: var(--text-primary);
             min-height: 100vh;
@@ -46,9 +45,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 24px;
             background: rgba(51, 65, 85, 0.3);
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
         }
@@ -60,7 +59,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .header-left p {
@@ -70,14 +69,19 @@
 
         .header-right a {
             color: var(--text-secondary);
-            font-size: 32px;
             transition: all 0.3s ease;
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
 
         .header-right a:hover {
             color: var(--primary-light);
-            transform: scale(1.1);
+        }
+
+        .header-right a svg {
+            width: 32px;
+            height: 32px;
         }
 
         .main-grid {
@@ -94,39 +98,49 @@
 
         .card {
             background: rgba(51, 65, 85, 0.3);
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 24px;
             backdrop-filter: blur(10px);
         }
 
         .code-section {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .section-header h2 {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 svg {
+            width: 24px;
+            height: 24px;
         }
 
         .button-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             border: none;
             font-size: 14px;
             font-weight: 600;
@@ -137,9 +151,15 @@
             gap: 8px;
         }
 
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:hover {
@@ -155,6 +175,7 @@
 
         .btn-secondary:hover {
             background: var(--border-color);
+            color: var(--text-primary);
         }
 
         .dropdown {
@@ -164,14 +185,13 @@
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
-            margin-top: 8px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            min-width: 200px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            min-width: 220px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             z-index: 100;
             overflow: hidden;
         }
@@ -181,11 +201,16 @@
         }
 
         .dropdown-item {
-            padding: 12px 16px;
+            padding: 14px 18px;
             cursor: pointer;
             transition: all 0.2s ease;
             color: var(--text-secondary);
             font-size: 14px;
+            border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
         }
 
         .dropdown-item:hover {
@@ -195,15 +220,15 @@
 
         textarea {
             width: 100%;
-            min-height: 400px;
-            padding: 15px;
-            border-radius: 8px;
+            min-height: 450px;
+            padding: 18px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            background: var(--bg-input);
+            background: rgba(15, 23, 42, 0.5);
             color: var(--text-primary);
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
             resize: vertical;
             transition: all 0.3s ease;
         }
@@ -211,35 +236,47 @@
         textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
 
         #txtOutput {
-            min-height: 200px;
-            background: #1a1a2e;
+            min-height: 300px;
+            background: rgba(26, 26, 46, 0.8);
         }
 
         .output-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .library-section {
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .library-section h3 {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .library-section h3 svg {
+            width: 18px;
+            height: 18px;
         }
 
         .library-section .note {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
         }
 
         .library-list {
@@ -252,6 +289,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .library-item:hover {
+            background: var(--bg-card);
         }
 
         .library-item input[type="checkbox"] {
@@ -270,22 +314,47 @@
 
         .library-item input[type="checkbox"]:checked + label {
             color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .status-message {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+            border: 1px solid transparent;
+        }
+
+        .status-message.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .status-message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error-color);
+            color: var(--error-color);
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 12px;
             }
 
             header {
                 flex-direction: column;
-                gap: 15px;
+                gap: 16px;
                 text-align: center;
+                padding: 20px;
             }
 
             .section-header {
                 flex-direction: column;
-                gap: 10px;
+                gap: 14px;
                 align-items: stretch;
             }
 
@@ -294,30 +363,13 @@
             }
 
             textarea {
-                min-height: 300px;
+                min-height: 350px;
             }
-        }
 
-        .status-message {
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .status-message.success {
-            display: block;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-        }
-
-        .status-message.error {
-            display: block;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -325,13 +377,13 @@
     <div class="container">
         <header>
             <div class="header-left">
-                <h1>💜 Kotlite 解释器演示</h1>
+                <h1>Kotlite 解释器演示</h1>
                 <p>轻量级 Kotlin 解释器 - 代码在客户端执行</p>
             </div>
             <div class="header-right">
                 <a href="https://github.com/sunny-chung/kotlite/" title="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .316.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
                 </a>
             </div>
@@ -340,17 +392,28 @@
         <div class="main-grid">
             <div class="card code-section">
                 <div class="section-header">
-                    <h2>📝 代码编辑器</h2>
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"/>
+                        </svg>
+                        代码编辑器
+                    </h2>
                     <div class="button-group">
                         <div class="dropdown">
                             <button class="btn btn-secondary" id="btnExamples">
-                                📋 示例代码
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                示例代码
                             </button>
                             <div class="dropdown-menu" id="lstExample">
                             </div>
                         </div>
                         <button class="btn btn-primary" id="btnRun">
-                            ▶️ 运行代码
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            运行代码
                         </button>
                     </div>
                 </div>
@@ -361,15 +424,26 @@
             <div class="card output-section">
                 <div>
                     <div class="section-header">
-                        <h2>📤 输出结果</h2>
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 4a4 4 0 0 1 4 4v1H6.09C6.57 6.88 8.14 5 12 5v0a5.98 5.98 0 0 1 4.79 2.46l1.42-1.42A8 8 0 0 0 4.06 11H2v2h2.06a8 8 0 0 0 14.15 4.96l-1.42-1.42A6 6 0 0 1 12 19c-3.86 0-5.43-1.88-5.91-4H16v1a4 4 0 0 1-4 4v0a4 4 0 0 1-4-4v0H4v-2h4V8a4 4 0 0 1 4-4v0"/>
+                            </svg>
+                            输出结果
+                        </h2>
                     </div>
                     <textarea id="txtOutput" readonly placeholder="运行结果将显示在这里..."></textarea>
                 </div>
 
                 <div class="library-section">
-                    <h3>📦 标准库</h3>
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+                        </svg>
+                        标准库
+                    </h3>
                     <p class="note">注意：某些标准库依赖于其他标准库</p>
-                    <div class="library-list" id="cotStdlibs"></div>
+                    <div class="library-list" id="cotStdlibs">
+                    </div>
                 </div>
             </div>
         </div>
