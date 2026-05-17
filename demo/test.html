@@ -18,8 +18,21 @@
             --text-muted: #94a3b8;
             --border-color: #475569;
             --success-color: #10b981;
-            --warning-color: #f59e0b;
             --error-color: #ef4444;
+        }
+
+        .light-mode {
+            --primary-color: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-dark: #4338ca;
+            --accent-color: #db2777;
+            --bg-dark: #f8fafc;
+            --bg-light: #e2e8f0;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
         }
 
         * {
@@ -34,6 +47,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             padding: 20px;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -47,14 +61,14 @@
             align-items: center;
             margin-bottom: 20px;
             padding: 20px;
-            background: rgba(51, 65, 85, 0.3);
+            background: var(--bg-card);
             border-radius: 16px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
         }
 
         .header-left h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             background: linear-gradient(90deg, var(--primary-light), var(--accent-color));
             -webkit-background-clip: text;
@@ -68,6 +82,12 @@
             font-size: 14px;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .header-right a {
             color: var(--text-secondary);
             transition: all 0.3s ease;
@@ -75,7 +95,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 10px 16px;
             background: var(--bg-card);
             border-radius: 10px;
             border: 1px solid var(--border-color);
@@ -87,9 +107,26 @@
             border-color: var(--primary-color);
         }
 
+        #theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        #theme-toggle:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
         .main-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 20px;
         }
 
@@ -97,10 +134,21 @@
             .main-grid {
                 grid-template-columns: 1fr;
             }
+
+            header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         .sidebar {
-            background: rgba(51, 65, 85, 0.3);
+            background: var(--bg-card);
             border-radius: 16px;
             border: 1px solid var(--border-color);
             padding: 20px;
@@ -131,10 +179,9 @@
 
         .example-list {
             list-style: none;
-        }
-
-        .example-item {
-            margin-bottom: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .example-btn {
@@ -142,33 +189,85 @@
             text-align: left;
             padding: 10px 14px;
             background: transparent;
-            border: none;
+            border: 1px solid transparent;
             color: var(--text-secondary);
             font-size: 14px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.2s ease;
         }
 
         .example-btn:hover {
-            background: var(--bg-card);
+            background: var(--bg-light);
             color: var(--text-primary);
+            border-color: var(--border-color);
         }
 
         .example-btn.active {
-            background: rgba(99, 102, 241, 0.15);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15));
             color: var(--primary-light);
-            border-left: 3px solid var(--primary-color);
+            border-color: var(--primary-color);
         }
 
-        .workspace {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                height: 100vh;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                border-radius: 0;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 10px 16px;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+            align-items: center;
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         .card {
-            background: rgba(51, 65, 85, 0.3);
+            background: var(--bg-card);
             border-radius: 16px;
             border: 1px solid var(--border-color);
             padding: 24px;
@@ -190,7 +289,7 @@
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .button-group {
@@ -200,7 +299,7 @@
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 10px;
             border: none;
             font-size: 14px;
@@ -224,7 +323,7 @@
         }
 
         .btn-secondary {
-            background: var(--bg-card);
+            background: var(--bg-light);
             color: var(--text-secondary);
             border: 1px solid var(--border-color);
         }
@@ -234,23 +333,13 @@
             color: var(--text-primary);
         }
 
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #0d966a;
-            transform: translateY(-2px);
-        }
-
         textarea {
             width: 100%;
             min-height: 300px;
             padding: 18px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--bg-dark);
             color: var(--text-primary);
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: 14px;
@@ -265,9 +354,8 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
 
-        #output {
-            min-height: 200px;
-            background: rgba(26, 26, 46, 0.8);
+        #output, #txtOutput {
+            min-height: 250px;
         }
 
         .status-message {
@@ -294,7 +382,7 @@
         }
 
         .library-section {
-            margin-top: 0;
+            margin-top: 20px;
         }
 
         .library-section h3 {
@@ -327,8 +415,8 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 12px;
-            background: var(--bg-card);
+            padding: 10px 12px;
+            background: var(--bg-light);
             border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
@@ -383,98 +471,68 @@
                 flex: 1;
                 justify-content: center;
             }
+
+            textarea {
+                min-height: 250px;
+            }
+
+            .header-right {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-left">
-                <h1>🧪 Kotlite 测试页面</h1>
-                <p>一站式测试 Kotlite 所有功能！</p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </button>
+                <div class="header-left">
+                    <h1>🧪 Kotlite 测试页面</h1>
+                    <p>一站式测试 Kotlite 所有功能！</p>
+                </div>
             </div>
             <div class="header-right">
                 <a href="index.html">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V5H7c-1.1 0-1.99.9-1.99 2v4H3.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5H5v4c0 1.1.9 2 2 2h4v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h4c1.1 0 2-.9 2-2v-4h1.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/>
+                    </svg>
+                    演示
+                </a>
+                <a href="../index.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                     </svg>
-                    返回主页
+                    文档
                 </a>
+                <button id="theme-toggle" title="切换主题">
+                    <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54s-2.94 8.28-7 9.54c.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/>
+                    </svg>
+                    <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2V4h2V1zm7.5 2.83 3.67l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42zM20 10.5v2h3v-2h-3zm-2.76-5.66l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zM13 18.5H11v3h2v-3zm3.24-2.34l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zM6.34 17l-1.79 1.8 1.41 1.41 1.79-1.8-1.41-1.41z"/>
+                    </svg>
+                </button>
             </div>
         </header>
 
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
         <div class="main-grid">
-            <aside class="sidebar">
+            <aside class="sidebar" id="sidebar">
                 <h2>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                     </svg>
                     示例列表
                 </h2>
-                
+
                 <h3>基础测试</h3>
-                <ul class="example-list">
-                    <li class="example-item">
-                        <button class="example-btn" data-example="hello">1. Hello World</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="variables">2. 变量和数据类型</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="strings">3. 字符串操作</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="math">4. 数学运算</button>
-                    </li>
-                </ul>
-
-                <h3>列表集合</h3>
-                <ul class="example-list">
-                    <li class="example-item">
-                        <button class="example-btn" data-example="list">5. List 操作</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="map">6. Map 操作</button>
-                    </li>
-                </ul>
-
-                <h3>控制流程</h3>
-                <ul class="example-list">
-                    <li class="example-item">
-                        <button class="example-btn" data-example="condition">7. 条件语句</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="loop">8. 循环控制</button>
-                    </li>
-                </ul>
-
-                <h3>函数</h3>
-                <ul class="example-list">
-                    <li class="example-item">
-                        <button class="example-btn" data-example="functions">9. 函数定义</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="lambda">10. Lambda 表达式</button>
-                    </li>
-                </ul>
-
-                <h3>实战示例</h3>
-                <ul class="example-list">
-                    <li class="example-item">
-                        <button class="example-btn" data-example="fibonacci">11. 斐波那契数列</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="prime">12. 素数检测</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="sort">13. 排序算法</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="wordcount">14. 文本频率统计</button>
-                    </li>
-                    <li class="example-item">
-                        <button class="example-btn" data-example="calculator">15. 简单的计算器</button>
-                    </li>
+                <ul class="example-list" id="exampleList">
                 </ul>
             </aside>
 
@@ -503,11 +561,11 @@
                         </div>
                     </div>
                     <div id="statusMessage" class="status-message"></div>
-                    <textarea id="codeInput" placeholder="在此输入 Kotlin 代码...">println("欢迎使用 Kotlite 测试页面!")
+                    <textarea id="txtCode" placeholder="在此输入 Kotlin 代码...">println("欢迎使用 Kotlite 测试页面！")
 println("请从左侧选择一个示例，或直接在此输入代码进行测试。")</textarea>
                 </div>
 
-                <div class="card">
+                <div class="card" style="margin-top: 20px;">
                     <div class="section-header">
                         <h2>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -522,7 +580,7 @@ println("请从左侧选择一个示例，或直接在此输入代码进行测�
                                 </svg>
                                 清空输出
                             </button>
-                            <button class="btn btn-success" id="copyOutputBtn">
+                            <button class="btn btn-secondary" id="copyOutputBtn">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M16 1H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V3h12v10z"/>
                                     <path d="M20 7h-4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2z"/>
@@ -531,18 +589,18 @@ println("请从左侧选择一个示例，或直接在此输入代码进行测�
                             </button>
                         </div>
                     </div>
-                    <textarea id="output" readonly placeholder="运行结果将显示在这里..."></textarea>
-                </div>
+                    <textarea id="txtOutput" readonly placeholder="运行结果将显示在这里..."></textarea>
 
-                <div class="card library-section">
-                    <h3>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-                        </svg>
-                        标准库
-                    </h3>
-                    <p class="note">注意：某些标准库依赖于其他标准库</p>
-                    <div class="library-list" id="libraryCheckboxes">
+                    <div class="library-section">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+                            </svg>
+                            标准库
+                        </h3>
+                        <p class="note">注意：某些标准库依赖于其他标准库</p>
+                        <div class="library-list" id="cotStdlibs">
+                        </div>
                     </div>
                 </div>
             </main>
@@ -550,394 +608,161 @@ println("请从左侧选择一个示例，或直接在此输入代码进行测�
     </div>
 
     <script>
-        // 示例代码库
-        const examples = {
-            hello: `println("Hello, 世界!")
-println("欢迎使用 Kotlite!")`,
+        // 主题系统
+        function initTheme() {
+            const savedTheme = localStorage.getItem('kotlite-theme');
             
-            variables: `// 变量声明
-val immutable = "我是不可变的"
-var mutable = "我是可变的"
-mutable = "我改变了!"
-
-// 数据类型
-val intNum: Int = 42
-val longNum: Long = 10000000000L
-val doubleNum: Double = 3.14159
-val booleanVal: Boolean = true
-val charVal: Char = 'A'
-
-println("整数: $intNum")
-println("长整数: $longNum")
-println("浮点数: $doubleNum")
-println("布尔值: $booleanVal")
-println("字符: $charVal")
-println("不可变变量: $immutable")
-println("可变变量: $mutable")`,
+            if (!savedTheme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (!prefersDark) {
+                    document.body.classList.add('light-mode');
+                    document.getElementById('moon-icon').style.display = 'none';
+                    document.getElementById('sun-icon').style.display = 'block';
+                }
+            } else if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('moon-icon').style.display = 'none';
+                document.getElementById('sun-icon').style.display = 'block';
+            }
             
-            strings: `val str = "Hello, Kotlin!"
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                const savedTheme = localStorage.getItem('kotlite-theme');
+                if (!savedTheme) {
+                    if (e.matches) {
+                        document.body.classList.remove('light-mode');
+                        document.getElementById('moon-icon').style.display = 'block';
+                        document.getElementById('sun-icon').style.display = 'none';
+                    } else {
+                        document.body.classList.add('light-mode');
+                        document.getElementById('moon-icon').style.display = 'none';
+                        document.getElementById('sun-icon').style.display = 'block';
+                    }
+                }
+            });
+        }
 
-// 基本操作
-println("字符串: $str")
-println("长度: ${str.length}")
-println("大写: ${str.uppercase()}")
-println("小写: ${str.lowercase()}")
-
-// 子串
-println("子串: ${str.substring(0, 5)}")
-
-// 检查包含
-println("包含 'Kotlin': ${str.contains("Kotlin")}")
-
-// 替换
-println("替换: ${str.replace("Hello", "Hi")}")
-
-// 去除空格
-val strWithSpaces = "   Hello World   "
-println("去除空格: '${strWithSpaces.trim()}'")
-
-// 分割和连接
-val csv = "apple,banana,orange"
-val parts = csv.split(",")
-println("分割后: $parts")
-println("连接: ${parts.joinToString(" | ")}")`,
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('kotlite-theme', isLight ? 'light' : 'dark');
             
-            math: `// 基本运算
-val a = 10
-val b = 3
-println("$a + $b = ${a + b}")
-println("$a - $b = ${a - b}")
-println("$a * $b = ${a * b}")
-println("$a / $b = ${a / b}")
-println("$a % $b = ${a % b}")
-
-// 比较运算
-println("$a > $b: ${a > b}")
-println("$a == $b: ${a == b}")
-
-// 使用 Math 库
-import kotlin.math.*
-println("绝对值 -42: ${abs(-42)}")
-println("最大 100, 200: ${max(100, 200)}")
-println("最小 100, 200: ${min(100, 200)}")
-println("平方根 16: ${sqrt(16.0)}")
-println("2^8: ${2.0.pow(8.0)}")
-println("四舍五入 3.7: ${round(3.7)}")
-println("向下取整 3.7: ${floor(3.7)}")
-println("向上取整 3.1: ${ceil(3.1)}")`,
-            
-            list: `// 创建列表
-val list = listOf("苹果", "香蕉", "橙子")
-println("原列表: $list")
-
-// 访问元素
-println("第一个元素: ${list[0]}")
-println("最后一个元素: ${list[list.size - 1]}")
-
-// 遍历
-println("\\n遍历列表:")
-for (item in list) {
-    println("- $item")
-}
-
-// 索引遍历
-println("\\n索引遍历:")
-for ((index, item) in list.withIndex()) {
-    println("$index: $item")
-}
-
-// 可变列表
-val mutableList = mutableListOf(1, 2, 3)
-println("\\n可变列表初始: $mutableList")
-mutableList.add(4)
-mutableList.add(0, 0)
-println("添加后: $mutableList")
-mutableList.remove(2)
-println("删除后: $mutableList")
-
-// 列表转换
-println("\\n映射: ${mutableList.map { it * 2 }}")
-println("过滤: ${mutableList.filter { it % 2 == 0 }}")
-println("求和: ${mutableList.sum()}")`,
-            
-            map: `// 创建 Map
-val map = mapOf(
-    "one" to 1,
-    "two" to 2,
-    "three" to 3
-)
-println("原Map: $map")
-
-// 访问值
-println("键 'one' 的值: ${map["one"]}")
-println("键 'four' 的值或默认: ${map.getOrDefault("four", 0)}")
-
-// 遍历
-println("\\n遍历 Map:")
-for ((key, value) in map) {
-    println("$key -> $value")
-}
-
-// 可变 Map
-val mutableMap = mutableMapOf<String, Int>()
-mutableMap["a"] = 10
-mutableMap["b"] = 20
-println("\\n可变Map: $mutableMap")
-mutableMap["c"] = 30
-println("添加后: $mutableMap")
-mutableMap.remove("a")
-println("删除后: $mutableMap")`,
-            
-            condition: `val score = 85
-
-// if 表达式
-val result = if (score >= 90) {
-    "优秀"
-} else if (score >= 80) {
-    "良好"
-} else if (score >= 60) {
-    "及格"
-} else {
-    "不及格"
-}
-println("成绩 $score: $result")
-
-// when 表达式
-val grade = 'B'
-val desc = when (grade) {
-    'A' -> "优秀"
-    'B' -> "良好"
-    'C' -> "合格"
-    else -> "其他"
-}
-println("等级 $grade: $desc")`,
-            
-            loop: `// for 循环范围
-println("1到5:")
-for (i in 1..5) {
-    print("$i ")
-}
-
-println("\\n\\n5到1:")
-for (i in 5 downTo 1) {
-    print("$i ")
-}
-
-println("\\n\\n1到10，步长2:")
-for (i in 1..10 step 2) {
-    print("$i ")
-}
-
-println("\\n\\n直到10:")
-for (i in 1 until 10) {
-    print("$i ")
-}
-
-// while 循环
-println("\\n\\nwhile 循环:")
-var n = 1
-while (n <= 5) {
-    print("${n * n} ")
-    n++
-}`,
-            
-            functions: `// 简单函数
-fun greet(name: String): String {
-    return "你好, $name!"
-}
-println(greet("张三"))
-
-// 单表达式函数
-fun add(a: Int, b: Int): Int = a + b
-println("10 + 20 = ${add(10, 20)}")
-
-// 带默认参数的函数
-fun greetDefault(name: String = "访客"): String {
-    return "欢迎, $name!"
-}
-println(greetDefault())
-println(greetDefault("李四"))
-
-// 可变参数
-fun sum(vararg numbers: Int): Int {
-    var total = 0
-    for (num in numbers) {
-        total += num
-    }
-    return total
-}
-println("求和 1-5: ${sum(1, 2, 3, 4, 5)}")`,
-            
-            lambda: `// 简单的 Lambda
-val double = { x: Int -> x * 2 }
-println("double(5): ${double(5)}")
-
-// 结合列表操作
-val numbers = listOf(1, 2, 3, 4, 5)
-println("原列表: $numbers")
-
-val doubled = numbers.map { it * 2 }
-println("乘以2: $doubled")
-
-val evens = numbers.filter { it % 2 == 0 }
-println("偶数: $evens")
-
-val sum = numbers.reduce { acc, num -> acc + num }
-println("求和: $sum")
-
-val total = numbers.fold(0) { acc, num -> acc + num }
-println("折叠求和: $total")`,
-            
-            fibonacci: `fun fibonacci(n: Int): List<Int> {
-    val result = mutableListOf<Int>()
-    var a = 0
-    var b = 1
-    
-    for (i in 1..n) {
-        result.add(a)
-        val next = a + b
-        a = b
-        b = next
-    }
-    
-    return result
-}
-
-val fib10 = fibonacci(10)
-println("斐波那契前10项: $fib10")`,
-            
-            prime: `fun isPrime(n: Int): Boolean {
-    if (n <= 1) return false
-    if (n <= 3) return true
-    if (n % 2 == 0 || n % 3 == 0) return false
-    
-    var i = 5
-    while (i * i <= n) {
-        if (n % i == 0 || n % (i + 2) == 0) return false
-        i += 6
-    }
-    return true
-}
-
-// 查找 1-50 之间的素数
-val primes = mutableListOf<Int>()
-for (i in 1..50) {
-    if (isPrime(i)) {
-        primes.add(i)
-    }
-}
-println("1-50之间的素数: $primes")`,
-            
-            sort: `fun bubbleSort(arr: MutableList<Int>) {
-    val n = arr.size
-    for (i in 0 until n - 1) {
-        for (j in 0 until n - i - 1) {
-            if (arr[j] > arr[j + 1]) {
-                // 交换
-                val temp = arr[j]
-                arr[j] = arr[j + 1]
-                arr[j + 1] = temp
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            if (isLight) {
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            } else {
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
             }
         }
-    }
-}
 
-val arr = mutableListOf(64, 34, 25, 12, 22, 11, 90)
-println("排序前: $arr")
-bubbleSort(arr)
-println("排序后: $arr")`,
-            
-            wordcount: `fun wordCount(text: String): Map<String, Int> {
-    val words = text.lowercase().split(" ", ",", ".", "!", "?")
-        .filter { it.isNotEmpty() }
-    
-    val countMap = mutableMapOf<String, Int>()
-    for (word in words) {
-        countMap[word] = (countMap[word] ?: 0) + 1
-    }
-    
-    return countMap.toSortedMap()
-}
+        initTheme();
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
-val text = "Kotlin is a great language. Kotlin is fun!"
-val counts = wordCount(text)
-println("词频统计:")
-for ((word, count) in counts) {
-    println("- $word: $count")
-}`,
-            
-            calculator: `fun calculate(a: Double, b: Double, op: Char): Double {
-    return when (op) {
-        '+' -> a + b
-        '-' -> a - b
-        '*' -> a * b
-        '/' -> if (b != 0.0) a / b else Double.NaN
-        '%' -> a % b
-        else -> throw IllegalArgumentException("未知操作符: $op")
-    }
-}
+        // 移动端侧边栏
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-println("100 + 50 = ${calculate(100.0, 50.0, '+')}")
-println("100 - 50 = ${calculate(100.0, 50.0, '-')}")
-println("100 * 50 = ${calculate(100.0, 50.0, '*')}")
-println("100 / 50 = ${calculate(100.0, 50.0, '/')}")
-println("100 % 50 = ${calculate(100.0, 50.0, '%')}")`
-        };
+        mobileMenuBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('show');
+        });
 
-        // DOM 元素
-        const codeInput = document.getElementById('codeInput');
-        const output = document.getElementById('output');
-        const runBtn = document.getElementById('runBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const clearOutputBtn = document.getElementById('clearOutputBtn');
-        const copyOutputBtn = document.getElementById('copyOutputBtn');
-        const statusMessage = document.getElementById('statusMessage');
-        const exampleBtns = document.querySelectorAll('.example-btn');
-        const libraryCheckboxes = document.getElementById('libraryCheckboxes');
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('show');
+        });
 
         // 显示状态消息
         function showStatus(message, isError = false) {
-            statusMessage.textContent = message;
-            statusMessage.className = 'status-message ' + (isError ? 'error' : 'success');
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message ' + (isError ? 'error' : 'success');
             setTimeout(() => {
-                statusMessage.className = 'status-message';
+                statusEl.className = 'status-message';
             }, 3000);
         }
 
-        // 加载示例
-        exampleBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const exampleId = btn.dataset.example;
-                if (examples[exampleId]) {
-                    codeInput.value = examples[exampleId];
-                    output.value = '';
-                    
-                    // 更新活动状态
-                    exampleBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    showStatus('示例加载成功!');
+        // 示例代码
+        const examples = [
+            { category: '基础测试', name: 'Hello World', id: 'hello', code: 'println("Hello, 世界！")\nprintln("欢迎使用 Kotlite！")' },
+            { category: '基础测试', name: '变量和数据类型', id: 'variables', code: '// 变量声明\nval immutable = "我是不可变的"\nvar mutable = "我是可变的"\nmutable = "我改变了！"\n\n// 数据类型\nval intNum: Int = 42\nval longNum: Long = 10000000000L\nval doubleNum: Double = 3.14159\nval booleanVal: Boolean = true\nval charVal: Char = \'A\'\n\nprintln("整数: " + intNum)\nprintln("长整数: " + longNum)\nprintln("浮点数: " + doubleNum)\nprintln("布尔值: " + booleanVal)\nprintln("字符: " + charVal)\nprintln("不可变变量: " + immutable)\nprintln("可变变量: " + mutable)' },
+            { category: '基础测试', name: '字符串操作', id: 'strings', code: 'val str = "Hello, Kotlin!"\n\n// 基本操作\nprintln("字符串: " + str)\nprintln("长度: " + str.length)\nprintln("大写: " + str.toUpperCase())\nprintln("小写: " + str.toLowerCase())\n\n// 子串\nprintln("子串: " + str.substring(0, 5))\n\n// 检查包含\nprintln("包含 \\\"Kotlin\\\": " + str.contains("Kotlin"))\n\n// 替换\nprintln("替换: " + str.replace("Hello", "Hi"))\n\n// 分割和连接\nval csv = "apple,banana,orange"\nval parts = csv.split(",")\nprintln("分割后: " + parts)\nprintln("连接: " + parts.joinToString(" | "))' },
+            { category: '基础测试', name: '数学运算', id: 'math', code: '// 基本运算\nval a = 10\nval b = 3\nprintln(a + " + " + b + " = " + (a + b))\nprintln(a + " - " + b + " = " + (a - b))\nprintln(a + " * " + b + " = " + (a * b))\nprintln(a + " / " + b + " = " + (a / b))\nprintln(a + " % " + b + " = " + (a % b))\n\n// 比较运算\nprintln(a + " > " + b + ": " + (a > b))\nprintln(a + " == " + b + ": " + (a == b))' },
+            { category: '列表集合', name: 'List 操作', id: 'list', code: '// 创建列表\nval list = listOf("苹果", "香蕉", "橙子")\nprintln("原列表: " + list)\n\n// 访问元素\nprintln("第一个元素: " + list[0])\nprintln("最后一个元素: " + list[list.size - 1])\n\n// 遍历\nprintln("\\n遍历列表:")\nfor (item in list) {\n    println("- " + item)\n}\n\n// 索引遍历\nprintln("\\n索引遍历:")\nfor ((index, item) in list.withIndex()) {\n    println(index + ": " + item)\n}\n\n// 可变列表\nval mutableList = mutableListOf(1, 2, 3)\nprintln("\\n可变列表初始: " + mutableList)\nmutableList.add(4)\nmutableList.add(0, 0)\nprintln("添加后: " + mutableList)\nmutableList.remove(2)\nprintln("删除后: " + mutableList)' },
+            { category: '列表集合', name: 'Map 操作', id: 'map', code: '// 创建 Map\nval map = mapOf(\n    "one" to 1,\n    "two" to 2,\n    "three" to 3\n)\nprintln("原Map: " + map)\n\n// 访问值\nprintln("键 \\\"one\\\" 的值: " + map["one"])\nprintln("键 \\\"four\\\" 的值或默认: " + map.getOrDefault("four", 0))\n\n// 遍历\nprintln("\\n遍历 Map:")\nfor ((key, value) in map) {\n    println(key + " -> " + value)\n}\n\n// 可变 Map\nval mutableMap = mutableMapOf<String, Int>()\nmutableMap["a"] = 10\nmutableMap["b"] = 20\nprintln("\\n可变Map: " + mutableMap)\nmutableMap["c"] = 30\nprintln("添加后: " + mutableMap)\nmutableMap.remove("a")\nprintln("删除后: " + mutableMap)' },
+            { category: '控制流程', name: '条件语句', id: 'condition', code: 'val score = 85\n\n// if 表达式\nval result = if (score >= 90) {\n    "优秀"\n} else if (score >= 80) {\n    "良好"\n} else if (score >= 60) {\n    "及格"\n} else {\n    "不及格"\n}\nprintln("成绩 " + score + ": " + result)\n\nval grade = \'B\'\nval desc = when (grade) {\n    \'A\' -> "优秀"\n    \'B\' -> "良好"\n    \'C\' -> "合格"\n    else -> "其他"\n}\nprintln("等级 " + grade + ": " + desc)' },
+            { category: '控制流程', name: '循环控制', id: 'loop', code: '// for 循环范围\nprintln("1到5:")\nfor (i in 1..5) {\n    print(i + " ")\n}\n\nprintln("\\n\\n5到1:")\nfor (i in 5 downTo 1) {\n    print(i + " ")\n}\n\nprintln("\\n\\n1到10，步长2:")\nfor (i in 1..10 step 2) {\n    print(i + " ")\n}\n\nprintln("\\n\\n直到10:")\nfor (i in 1 until 10) {\n    print(i + " ")\n}\n\n// while 循环\nprintln("\\n\\nwhile 循环:")\nvar n = 1\nwhile (n <= 5) {\n    print((n * n) + " ")\n    n++\n}' },
+            { category: '函数', name: '函数定义', id: 'functions', code: '// 简单函数\nfun greet(name: String): String {\n    return "你好, " + name + "！"\n}\nprintln(greet("张三"))\n\n// 单表达式函数\nfun add(a: Int, b: Int): Int = a + b\nprintln("10 + 20 = " + add(10, 20))\n\n// 带默认参数的函数\nfun greetDefault(name: String = "访客"): String {\n    return "欢迎, " + name + "！"\n}\nprintln(greetDefault())\nprintln(greetDefault("李四"))\n\n// 可变参数\nfun sum(vararg numbers: Int): Int {\n    var total = 0\n    for (num in numbers) {\n        total += num\n    }\n    return total\n}\nprintln("求和 1-5: " + sum(1, 2, 3, 4, 5))' },
+            { category: '函数', name: 'Lambda 表达式', id: 'lambda', code: '// 简单的 Lambda\nval double = { x: Int -> x * 2 }\nprintln("double(5): " + double(5))\n\n// 结合列表操作\nval numbers = listOf(1, 2, 3, 4, 5)\nprintln("原列表: " + numbers)\n\nval doubled = numbers.map { it * 2 }\nprintln("乘以2: " + doubled)\n\nval evens = numbers.filter { it % 2 == 0 }\nprintln("偶数: " + evens)\n\nval sum = numbers.reduce { acc, num -> acc + num }\nprintln("求和: " + sum)' },
+            { category: '实战示例', name: '斐波那契数列', id: 'fibonacci', code: 'fun fibonacci(n: Int) {\n    var a = 0\n    var b = 1\n    \n    for (i in 1..n) {\n        println(a)\n        val next = a + b\n        a = b\n        b = next\n    }\n}\n\nprintln("斐波那契前10项:")\nfibonacci(10)' },
+            { category: '实战示例', name: '素数检测', id: 'prime', code: 'fun isPrime(n: Int): Boolean {\n    if (n <= 1) return false\n    if (n <= 3) return true\n    if (n % 2 == 0 || n % 3 == 0) return false\n    \n    var i = 5\n    while (i * i <= n) {\n        if (n % i == 0 || n % (i + 2) == 0) return false\n        i += 6\n    }\n    return true\n}\n\n// 查找 1-50 之间的素数\nprintln("1-50之间的素数:")\nfor (i in 1..50) {\n    if (isPrime(i)) {\n        println(i)\n    }\n}' },
+            { category: '实战示例', name: '排序算法', id: 'sort', code: 'fun bubbleSort(arr: MutableList<Int>) {\n    val n = arr.size\n    for (i in 0 until n - 1) {\n        for (j in 0 until n - i - 1) {\n            if (arr[j] > arr[j + 1]) {\n                // 交换\n                val temp = arr[j]\n                arr[j] = arr[j + 1]\n                arr[j + 1] = temp\n            }\n        }\n    }\n}\n\nval arr = mutableListOf(64, 34, 25, 12, 22, 11, 90)\nprintln("排序前: " + arr)\nbubbleSort(arr)\nprintln("排序后: " + arr)' },
+            { category: '实战示例', name: '文本频率统计', id: 'wordcount', code: 'fun wordCount(text: String): Map<String, Int> {\n    val words = text.toLowerCase().split(" ", ",", ".", "!", "?")\n        .filter { it.isNotEmpty() }\n    \n    val countMap = mutableMapOf<String, Int>()\n    for (word in words) {\n        countMap[word] = (countMap[word] ?: 0) + 1\n    }\n    \n    return countMap.toSortedMap()\n}\n\nval text = "Kotlin is a great language. Kotlin is fun!"\nval counts = wordCount(text)\nprintln("词频统计:")\nfor ((word, count) in counts) {\n    println("- " + word + ": " + count)\n}' },
+            { category: '实战示例', name: '简单计算器', id: 'calculator', code: 'fun calculate(a: Double, b: Double, op: Char): Double {\n    return when (op) {\n        \'+\' -> a + b\n        \'-\' -> a - b\n        \'*\' -> a * b\n        \'/\' -> if (b != 0.0) a / b else Double.NaN\n        \'%\' -> a % b\n        else -> throw IllegalArgumentException("未知操作符: " + op)\n    }\n}\n\nprintln("100 + 50 = " + calculate(100.0, 50.0, \'+\'))\nprintln("100 - 50 = " + calculate(100.0, 50.0, \'-\'))\nprintln("100 * 50 = " + calculate(100.0, 50.0, \'*\'))\nprintln("100 / 50 = " + calculate(100.0, 50.0, \'/\'))\nprintln("100 % 50 = " + calculate(100.0, 50.0, \'%\'))' }
+        ];
+
+        // 填充示例列表
+        const exampleList = document.getElementById('exampleList');
+        let currentActiveExample = null;
+        let currentCategory = '';
+        
+        examples.forEach(example => {
+            if (example.category !== currentCategory) {
+                const h3 = document.createElement('h3');
+                h3.textContent = example.category;
+                exampleList.appendChild(h3);
+                currentCategory = example.category;
+            }
+            
+            const li = document.createElement('li');
+            const btn = document.createElement('button');
+            btn.className = 'example-btn';
+            btn.textContent = example.name;
+            btn.dataset.exampleId = example.id;
+            
+            btn.addEventListener('click', function() {
+                if (currentActiveExample) {
+                    currentActiveExample.classList.remove('active');
                 }
+                btn.classList.add('active');
+                currentActiveExample = btn;
+                
+                document.getElementById('txtCode').value = example.code;
+                document.getElementById('txtOutput').value = '';
+                showStatus('示例加载成功！');
+                
+                // 移动端关闭侧边栏
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
             });
+            
+            li.appendChild(btn);
+            exampleList.appendChild(li);
         });
 
-        // 清空按钮
-        clearBtn.addEventListener('click', () => {
-            codeInput.value = '';
+        // 按钮事件
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('txtCode').value = '';
             showStatus('代码已清空');
         });
 
-        // 清空输出按钮
-        clearOutputBtn.addEventListener('click', () => {
-            output.value = '';
+        document.getElementById('clearOutputBtn').addEventListener('click', function() {
+            document.getElementById('txtOutput').value = '';
             showStatus('输出已清空');
         });
 
-        // 复制输出按钮
-        copyOutputBtn.addEventListener('click', () => {
+        document.getElementById('copyOutputBtn').addEventListener('click', function() {
+            const output = document.getElementById('txtOutput');
             output.select();
             document.execCommand('copy');
-            showStatus('输出已复制到剪贴板!');
+            showStatus('输出已复制到剪贴板！');
+        });
+
+        document.getElementById('runBtn').addEventListener('click', function() {
+            showStatus('正在运行代码...');
         });
     </script>
     <script src="kotlite-demo.js"></script>

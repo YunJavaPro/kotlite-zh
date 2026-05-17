@@ -418,10 +418,10 @@ pre code {
     color: #f8fafc;
 }
 
-/* 复制按钮 */
+/* 复制按钮 - 右下角位置 */
 .copy-button {
     position: absolute;
-    top: 10px;
+    bottom: 10px;
     right: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -434,6 +434,7 @@ pre code {
     display: flex;
     align-items: center;
     gap: 6px;
+    z-index: 10;
 }
 
 .copy-button:hover {
@@ -665,33 +666,39 @@ video {
         <input type="text" class="search-box" placeholder="搜索文档 (Ctrl+K)...">
     </div>
     <div class="nav-links">
-        <a href="demo/index.html" class="nav-link">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V5H7c-1.1 0-1.99.9-1.99 2v4H3.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5H5v4c0 1.1.9 2 2 2h4v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h4c1.1 0 2-.9 2-2v-4h1.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/>
-            </svg>
-            在线演示
-        </a>
-        <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .316.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            原项目
-        </a>
-        <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-            GitHub
-        </a>
-        <button id="theme-toggle" title="切换主题">
-            <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54s-2.94 8.28-7 9.54c.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/>
-            </svg>
-            <svg id="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2V4h2V1zm7.5zm2.83 3.67l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42zM20 10.5v2h3v-2h-3zm-2.76-5.66l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zM13 18.5H11v3h2v15.5zm3.24-2.34l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zM6.34 17l-1.79 1.8 1.41 1.41 1.79-1.8-1.41-1.41z"/>
-            </svg>
-        </button>
-    </div>
+            <a href="demo/index.html" class="nav-link">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V5H7c-1.1 0-1.99.9-1.99 2v4H3.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5H5v4c0 1.1.9 2 2 2h4v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h4c1.1 0 2-.9 2-2v-4h1.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/>
+                </svg>
+                在线演示
+            </a>
+            <a href="demo/test.html" class="nav-link" style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white;">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.5 2.5A2.5 2.5 0 0122 5V19a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 016 19v-2h2v2h11V5H8v2H6V5a2.5 2.5 0 012.5-2.5h11zM9 11h8v2H9v-2zM4.5 13.5H2V9.5h2.5v4zM5 8H3v-2h2v2zM5 18H3v-2h2v2z"/>
+                </svg>
+                测试页面
+            </a>
+            <a href="https://github.com/sunny-chung/kotlite" class="nav-link" target="_blank">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .316.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                原项目
+            </a>
+            <a href="https://github.com/YunJavaPro/kotlite-zh" class="nav-link">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                GitHub
+            </a>
+            <button id="theme-toggle" title="切换主题">
+                <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54s-2.94 8.28-7 9.54c.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/>
+                </svg>
+                <svg id="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                    <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2V4h2V1zm7.5zm2.83 3.67l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42zM20 10.5v2h3v-2h-3zm-2.76-5.66l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zM13 18.5H11v3h2v15.5zm3.24-2.34l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zM6.34 17l-1.79 1.8 1.41 1.41 1.79-1.8-1.41-1.41z"/>
+                </svg>
+            </button>
+        </div>
 </div>
 
 <!-- 遮罩层 - 仅移动端 -->
@@ -731,14 +738,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const sunIcon = document.getElementById('sun-icon');
     let allHeaders = [];
     
-    // 主题切换
+    // 主题系统 - 支持跟随系统和手动切换
     function initTheme() {
         const savedTheme = localStorage.getItem('kotlite-theme');
-        if (savedTheme === 'light') {
+        
+        // 如果没有保存的主题，使用系统主题
+        if (!savedTheme) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (!prefersDark) {
+                document.body.classList.add('light-mode');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            }
+        } else if (savedTheme === 'light') {
             document.body.classList.add('light-mode');
             moonIcon.style.display = 'none';
             sunIcon.style.display = 'block';
         }
+        
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            const savedTheme = localStorage.getItem('kotlite-theme');
+            // 只有当没有手动设置主题时才跟随系统
+            if (!savedTheme) {
+                if (e.matches) {
+                    document.body.classList.remove('light-mode');
+                    moonIcon.style.display = 'block';
+                    sunIcon.style.display = 'none';
+                } else {
+                    document.body.classList.add('light-mode');
+                    moonIcon.style.display = 'none';
+                    sunIcon.style.display = 'block';
+                }
+            }
+        });
     }
     
     function toggleTheme() {
