@@ -136,20 +136,6 @@
             gap: 20px;
         }
 
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            header {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
-        }
-
         .sidebar {
             background: var(--bg-card);
             border-radius: 16px;
@@ -163,7 +149,50 @@
             max-height: calc(100vh - 60px);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 10px 16px;
+            transition: all 0.3s ease;
+            align-items: center;
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
         @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
             .sidebar {
                 position: fixed;
                 top: 0;
@@ -185,39 +214,6 @@
             .mobile-menu-btn {
                 display: flex;
             }
-
-            .sidebar-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 999;
-            }
-
-            .sidebar-overlay.show {
-                display: block;
-            }
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text-primary);
-            padding: 10px 16px;
-            transition: all 0.3s ease;
-            align-items: center;
-        }
-
-        .mobile-menu-btn:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
         }
 
         .sidebar h2 {
@@ -341,42 +337,6 @@
 
         .btn-secondary:hover {
             background: var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            min-width: 200px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .dropdown-item:hover {
-            background: var(--bg-light);
             color: var(--text-primary);
         }
 
@@ -597,16 +557,6 @@
                         代码编辑器
                     </h2>
                     <div class="button-group">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary" id="btnExamples">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                                </svg>
-                                示例代码
-                            </button>
-                            <div class="dropdown-menu" id="lstExample">
-                            </div>
-                        </div>
                         <button class="btn btn-secondary" id="clearBtn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -733,19 +683,6 @@
         sidebarOverlay.addEventListener('click', function() {
             sidebar.classList.remove('open');
             sidebarOverlay.classList.remove('show');
-        });
-
-        // 下拉菜单功能
-        const btnExamples = document.getElementById('btnExamples');
-        const lstExample = document.getElementById('lstExample');
-
-        btnExamples.addEventListener('click', function(e) {
-            e.stopPropagation();
-            lstExample.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function() {
-            lstExample.classList.remove('show');
         });
 
         // 示例代码 - 合并了演示和测试页面的所有示例
